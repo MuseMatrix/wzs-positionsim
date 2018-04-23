@@ -18,8 +18,8 @@
                 height:100%;
             }
             .wrap{
-                width: 300px;
-                height: 500px;
+                width: 600px;
+                height: 700px;
                 margin: 10px auto;
                 border: 10px solid #fff;
             }
@@ -85,7 +85,7 @@
                     function start(idx,e){
                         oBox.innerHTML = "";
                         enemy(idx);
-                       /* airPlane(idx,e);*/
+                       airPlane(idx,e);
                     }
 
                     //生成敌机
@@ -114,6 +114,61 @@
                                 }
                         },speed[idx])
                     }
+
+                //生成我军
+                function airPlane(idx,e){
+                    var myAirPlane = document.createElement("img");
+                        myAirPlane.src = "img/plane.png";
+                        myAirPlane.width = "60";
+                        myAirPlane.height = "36";
+                        myAirPlane.style.top = e.clientY - oBox.offsetTop - myAirPlane.height/2 +"px";
+                        myAirPlane.style.left = e.clientX - oBox.offsetLeft - myAirPlane.width/2 +"px";
+                        oBox.appendChild(myAirPlane);
+
+                    var maxTop = oBox.clientHeight  - myAirPlane.height,
+                        minTop = 0,
+                        minLeft = -myAirPlane.width/2,
+                        maxLeft = oBox.clientWidth + minLeft;
+
+                    document.onmousemove = function(e){
+                        var top = e.clientY - oBox.offsetTop -  myAirPlane.height/2,
+                            left = e.clientX - oBox.offsetLeft - myAirPlane.width/2;
+
+                            top = Math.max(minTop,top);
+                            top = Math.min(maxTop,top);
+
+                            left = Math.max(minLeft,left);
+                            left = Math.min(maxLeft,left);
+
+                            myAirPlane.style.top = top + "px";
+                            myAirPlane.style.left = left + "px";
+                    }
+
+                    var speed = [150,100,70,20],
+                        biuSpd = [5,8,9,10][idx];
+
+                    myAirPlane.oTimer = setInterval(function(){
+                        var biu = document.createElement("img");
+                            biu.src = "img/bullet.png";
+                            biu.width = 6;
+                            biu.height = 22;
+
+                            biu.style.left = myAirPlane.offsetLeft + myAirPlane.width/2 - biu.width/2 + "px";
+                            biu.style.top = myAirPlane.offsetTop - biu.height + "px";
+
+                            oBox.appendChild(biu);
+
+                            run();
+                            function run(){
+                                biu.style.top  = biu.offsetTop - biuSpd +"px";
+                                if(biu.offsetTop <= 0){
+                                    oBox.removeChild(biu);
+                                }else{
+                                    requestAnimationFrame(run);
+                                }  
+                            }
+                    },speed[idx])
+                }
             }())
         </script>
     </body><!--网页的结束-->
