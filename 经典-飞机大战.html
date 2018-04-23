@@ -1,0 +1,120 @@
+<!DOCTYPE html><!--声明HTML文件-->
+<html><!--网页的开始-->
+    <head><!--给浏览器看的信息-->
+        <title>Examples</title>
+        <meta charset="UTF-8"><!--编码格式为国际编码UTF-8-->
+        <meta name="Author" content="老先生"><!-- 作者 -->
+        <meta name="keywords" content=""><!--为搜索引擎提供关键字列表-->
+        <meta name="description" content=""><!--对网页的描述，给搜索引擎抓取-->
+        <style type="text/css">
+            body, p, ul, dl, dd, ol, h1, h2, h3, h4, h5, h6{ margin:0;}
+            ul,ol{ padding-left:0;list-style:none;}
+            body{font-size: 12px; font-family:"PingFang SC";}
+            a{text-decoration: none; color: #999;}
+            img{vertical-align: middle;}
+
+            body{
+                background-color: #000;
+                height:100%;
+            }
+            .wrap{
+                width: 300px;
+                height: 500px;
+                margin: 10px auto;
+                border: 10px solid #fff;
+            }
+            .box{
+                position: relative;
+                width: 100%;
+                height: 100%;
+            }
+            h1{
+                padding: 30px;
+                color: #fff;
+                text-align: center;
+            }
+            .box .init{
+                width: 150px;
+                height: 30px;
+                margin: 40px auto;
+                text-align: center;
+                line-height: 30px;
+                background-color: #fff;
+                cursor: pointer;
+            }
+            img{
+                position: absolute;
+            }
+        </style>
+    </head>
+    <body><!--可视化区域-->
+        <div class="wrap">
+            <div class="box">
+<!--                 <h1>飞机大战V1.0</h1>
+<div class="init">简单</div>
+<div class="init">一般</div>
+<div class="init">正常</div>
+<div class="init">困难</div> -->
+            </div>
+        </div>
+        <script type="text/javascript">
+            (function(){
+                var oBox = document.getElementsByClassName("box")[0],
+                    oTimer = null;
+                    init();
+                    //初始化界面
+                    function init(){
+                        var optionAry = ['简单','一般','正常','困难'];
+                        var h1 = document.createElement("h1");
+                            h1.innerHTML = "飞机大战残缺版V1.0";
+                            oBox.appendChild(h1);
+
+                        for(var i = 0;i < optionAry.length; i++){
+                            var div = document.createElement('div');
+                                div.innerHTML = optionAry[i];
+                                div.className = "init";
+                                div.i = i;
+
+                                div.onclick = function(e){
+                                    start(this.i,e)
+                                }
+                                oBox.appendChild(div);
+                        }
+                    }
+                    //生成敌机和我军调用函数
+                    function start(idx,e){
+                        oBox.innerHTML = "";
+                        enemy(idx);
+                       /* airPlane(idx,e);*/
+                    }
+
+                    //生成敌机
+                    function enemy(idx){
+                        var speed = [300,150,80,40];
+
+                        oTimer = setInterval(function(){
+                            var enemyImg = document.createElement("img");
+                                enemyImg.src = "img/enemy.png";
+                                enemyImg.width = "23";
+                                enemyImg.height = "30";
+                                enemyImg.style.top = 0;
+                                enemyImg.style.left  = Math.floor(Math.random() * oBox.clientWidth + 1 - enemyImg.width/2) + "px";
+                                enemyImg.speed = Math.floor(Math.random() * 10 + 3);
+                                oBox.appendChild(enemyImg);
+
+                                run();
+
+                                function run(){
+                                    enemyImg.style.top = enemyImg.offsetTop + enemyImg.speed + "px";
+                                    if(enemyImg.offsetTop >= oBox.clientHeight){
+                                        oBox.removeChild(enemyImg);
+                                    }else{
+                                        requestAnimationFrame(run);
+                                    }
+                                }
+                        },speed[idx])
+                    }
+            }())
+        </script>
+    </body><!--网页的结束-->
+</html>
