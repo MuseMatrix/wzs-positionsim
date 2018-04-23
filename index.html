@@ -130,7 +130,7 @@
                         minLeft = -myAirPlane.width/2,
                         maxLeft = oBox.clientWidth + minLeft;
 
-                    document.ontouchmove = function(e){
+                    document.onmousemove = function(e){
                         var top = e.clientY - oBox.offsetTop -  myAirPlane.height/2,
                             left = e.clientX - oBox.offsetLeft - myAirPlane.width/2;
 
